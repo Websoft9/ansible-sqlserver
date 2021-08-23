@@ -1,0 +1,88 @@
+name: sync by update README-zh.jinja2 or README.jinja2
+
+on:
+  push:
+      paths: [README-zh.jinja2, README.jinja2]
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        env:
+          FILES:  ansible-activemq
+                  ansible-alfresco
+                  ansible-alldocs
+                  ansible-ansible
+                  ansible-awx
+                  ansible-bt
+                  ansible-canvas
+                  ansible-cloudbeaver
+                  ansible-codeserver
+                  ansible-couchdb
+                  ansible-discuz
+                  ansible-docker
+                  ansible-drupal
+                  ansible-erpnext
+                  ansible-ghost
+                  ansible-gitlab
+                  ansible-grafana
+                  ansible-graylog
+                  ansible-haproxy
+                  ansible-java
+                  ansible-jenkins
+                  ansible-joomla
+                  ansible-kafka
+                  ansible-knowage
+                  ansible-lamp
+                  ansible-lcmp
+                  ansible-linux
+                  ansible-lnmp
+                  ansible-magento
+                  ansible-mariadb
+                  ansible-mattermost
+                  ansible-mediawiki
+                  ansible-memcached
+                  ansible-metabase
+                  ansible-mingdao
+                  ansible-mongodb
+                  ansible-moodle
+                  ansible-mysql
+                  ansible-neo4j
+                  ansible-nextcloud
+                  ansible-nodejs
+                  ansible-odoo
+                  ansible-onlyoffice
+                  ansible-opencart
+                  ansible-opencv
+                  ansible-oracledatabase
+                  ansible-owncloud
+                  ansible-phpapps
+                  ansible-postgresql
+                  ansible-prestashop
+                  ansible-python
+                  ansible-rabbitmq
+                  ansible-redis
+                  ansible-redmine
+                  ansible-rethinkdb
+                  ansible-rocketchat
+                  ansible-rocketmq
+                  ansible-ruby
+                  ansible-scratch
+                  ansible-seafile
+                  ansible-sqlite
+                  ansible-superset
+                  ansible-tensorflow
+                  ansible-template
+                  ansible-webmin
+                  ansible-wordpress
+                  ansible-zabbix
+                  ansible-zentao
+        run: |
+          for f in $FILES
+          do
+            curl -X POST https://api.github.com/repos/websoft9/$f/dispatches \
+            -H 'Accept: application/vnd.github.everest-preview+json' \
+            -u ${{ secrets.ACCESS_TOKEN }} \
+            --data '{"event_type": "sync_readme", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+          done
